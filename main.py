@@ -2,8 +2,6 @@ import requests
 import os
 from datetime import datetime
 
-# API_Key=nix_live_r5agTX6n860PJLgX5zenHuy75qbvBWs7
-# App_ID=app_fbdaf11bcdf3418da3fb5dd9 
 
 APP_ID = os.environ["NT_APP_ID"]
 API_KEY = os.environ["NT_API_KEY"]
@@ -33,7 +31,7 @@ now_time = datetime.now().strftime("%X")
 
 for exercise in result["exercises"]:
     sheet_inputs = {
-    "sheet1": {   # <-- MUST match your sheet name
+    "sheet1": {   
         "date": today_date,
         "time": now_time,
         "exercise": exercise["name"].title(),
