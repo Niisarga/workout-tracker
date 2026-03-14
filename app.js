@@ -1,7 +1,6 @@
 let workouts = [];
 let currentExerciseCount = 0;
 
-// ---------------- DOM Elements ----------------
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 const workoutForm = document.getElementById('workout-form');
@@ -13,10 +12,8 @@ const modalClose = document.querySelector('.modal-close');
 const modalBody = document.getElementById('modal-body');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 
-// ---------------- Sheety Endpoint ----------------
 const SHEET_ENDPOINT = "https://api.sheety.co/07fc597a264c8328e3a403f20b473910/untitledSpreadsheet/sheet1";
 
-// ---------------- Initialize App ----------------
 document.addEventListener('DOMContentLoaded', async () => {
 
     loadLocalWorkouts();          // Load local data first
@@ -29,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateHistory();
 });
 
-// ---------------- Load workouts from Sheety ----------------
 async function loadWorkoutsFromSheet() {
     try {
         const res = await fetch(SHEET_ENDPOINT);
@@ -61,7 +57,6 @@ async function loadWorkoutsFromSheet() {
     }
 }
 
-// ---------------- Load Local Storage ----------------
 function loadLocalWorkouts(){
     const stored = localStorage.getItem('workouts');
 
@@ -70,12 +65,10 @@ function loadLocalWorkouts(){
     }
 }
 
-// ---------------- Save to Local Storage ----------------
 function saveWorkoutsToLocal(){
     localStorage.setItem('workouts', JSON.stringify(workouts));
 }
 
-// ---------------- Save to Sheety ----------------
 async function saveWorkoutToSheet(workout){
 
     const sheetData = {
@@ -106,13 +99,11 @@ async function saveWorkoutToSheet(workout){
     }
 }
 
-// ---------------- Date Picker ----------------
 function initializeDatePicker(){
     document.getElementById('workout-date').value =
         new Date().toISOString().split('T')[0];
 }
 
-// ---------------- Event Listeners ----------------
 function setupEventListeners() {
 
     tabBtns.forEach(btn =>
@@ -153,7 +144,6 @@ function setupEventListeners() {
         if(e.key === 'Escape') closeModal();
     });
 }
-// ---------------- Tab Switch ----------------
 function switchTab(tabName){
 
     tabBtns.forEach(btn=>{
@@ -165,7 +155,6 @@ function switchTab(tabName){
     });
 }
 
-// ---------------- Add Exercise ----------------
 function addExercise(){
 
     currentExerciseCount++;
@@ -189,7 +178,6 @@ function removeExercise(id){
     if(el) el.remove();
 }
 
-// ---------------- Form Submit ----------------
 function handleFormSubmit(e){
 
     e.preventDefault();
@@ -227,7 +215,6 @@ function handleFormSubmit(e){
     switchTab('dashboard');
 }
 
-// ---------------- Dashboard ----------------
 function updateDashboard(){
 
     const total = workouts.length;
@@ -255,7 +242,6 @@ function updateDashboard(){
     `).join('');
 }
 
-// ---------------- History ----------------
 function updateHistory(){
 
     const historyList = document.getElementById('history-list');
@@ -278,7 +264,6 @@ function updateHistory(){
     `).join('');
 }
 
-// ---------------- Modal ----------------
 function viewWorkout(id){
 
     const workout = workouts.find(w=>w.id === id);
@@ -298,7 +283,6 @@ function closeModal(){
     workoutModal.classList.remove('active');
 }
 
-// ---------------- Clear History ----------------
 function clearAllHistory(){
 
     const historyList = document.getElementById('history-list');
@@ -312,7 +296,6 @@ function clearAllHistory(){
 
     }
 }
-// ---------------- Notification ----------------
 function showNotification(message, duration = 3000){
 
     const notif = document.getElementById('notification');
@@ -326,12 +309,10 @@ function showNotification(message, duration = 3000){
     }, duration);
 }
 
-// ---------------- Streak ----------------
 function calculateStreak(){
     return workouts.length; // simple placeholder
 }
 
-// ---------------- Global ----------------
 window.addExercise = addExercise;
 window.removeExercise = removeExercise;
 window.viewWorkout = viewWorkout;
